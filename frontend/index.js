@@ -82,6 +82,8 @@ const venues = [
 ]
 
 const searchBar = document.getElementById("searchBar")
+const width = searchBar.offsetWidth;
+console.log(width)
 
 searchBar.addEventListener("input", () => {
   const venueOptions = document.getElementById("venueOptions")
@@ -97,6 +99,7 @@ searchBar.addEventListener("input", () => {
   for (let i = 0; i < venues.length; i++) {
     if (venues[i].name.toLowerCase().includes(input.toLowerCase()) && input !== '') {
       const matchedVenueButton = document.createElement("button")
+      matchedVenueButton.classList.add('matchedVenuesButton');
       matchedVenueButton.textContent = venues[i].name
       venueOptions.appendChild(matchedVenueButton)
       matchedVenueButton.addEventListener('click', () => {
@@ -106,25 +109,56 @@ searchBar.addEventListener("input", () => {
   }
 })
 
-async function fetchBookingData(id) {
+async function fetchBookingData(id, date) {
   try {
-    const response = await fetch(`/booking/${id}`)
-    const bookings = await response.json()
-    console.log(bookings)
+    const response = await fetch(`http://127.0.0.1:8000/booking/${id}/?date=${date}`)
+    const bookings = await response.json() // response.json() parses json response into a javascript array of objects
     return bookings
   } 
   catch (error) {
-    console.error(error.message)
     return error
+  }
+}
+
+async function displayBookingData(id, date) {
+  const bookings = await fetchBookingData(id, date)
+
+  const bookingContainer = document.getElementById("bookingContainer")
+  for (let i = 0; i < bookings.length; i++) {
+    // Extract the time 
+    const startTime = bookings[i].Start_Date.slice(11, 20) 
+    const endTime =  bookings[i].End_Date.slice(11, 20)
+    const court =  bookings[i].Name
+
+    const booking = document.createElement("div")
+    booking.classList.add('individualBooking');
+    const bookingDetails = `Court: ${court}, Start: ${startTime}, End: ${endTime}`
+    booking.textContent = bookingDetails
+    console.log(bookingDetails)
+    
+    bookingContainer.appendChild(booking)
   }
 }
 
 const submitButton = document.getElementById("submitButton")
 submitButton.addEventListener("click", () => {
+  // Remove existing booking data from a previous request
+  const bookingContainer = document.getElementById("bookingContainer")
+  while (bookingContainer.firstChild) {
+    bookingContainer.removeChild(bookingContainer.firstChild)
+  }
+
+  // Remove venue options from the search bar
+  const venueOptions = document.getElementById("venueOptions")
+  while (venueOptions.firstChild) {
+    venueOptions.removeChild(venueOptions.firstChild)
+  }
+
   const venueName = searchBar.value
   for (let i = 0; i < venues.length; i++) {
     if (venueName === venues[i].name) {
-      const response = fetchBookingData(venues[i].id)
+      const date = document.getElementById("dateInput").value
+      displayBookingData(venues[i].id, date) // Bookings is a javascript array of all bookings on that date
     }
   }
 })

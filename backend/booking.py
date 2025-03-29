@@ -34,5 +34,13 @@ def get_booking_data(court_id: int, date: date):
 
   cleaned_booking_data.sort(key=lambda x: x["Start_Date"])
 
+  for cleaned_booking in cleaned_booking_data:
+    if cleaned_booking["Name"] == "Synthetic grass court 1":
+      cleaned_booking["Name"] = "Synthetic Grass Court 1"
+    elif cleaned_booking["Name"] == "Synthetic grass court 2":
+      cleaned_booking["Name"] = "Synthetic Grass Court 2"
+    elif cleaned_booking["Name"] == "Acrylic hard court 3":
+      cleaned_booking["Name"] = "Acrylic Hard Court 3"
+
   # cleaned_booking_data_json = json.dumps(cleaned_booking_data, indent=4)
   return cleaned_booking_data

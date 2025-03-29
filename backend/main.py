@@ -1,4 +1,3 @@
-from typing import Union
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import date
@@ -7,7 +6,7 @@ from booking import get_booking_data
 app = FastAPI()
 
 origins = [
-    "http://localhost:5500",
+    "http://172.31.96.178:3000",
 ]
 
 app.add_middleware(
