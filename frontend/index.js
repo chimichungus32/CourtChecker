@@ -1,4 +1,4 @@
-let venues = [
+const venues = [
   {
     name: "Allan Small Park tennis courts", 
     id: 30
