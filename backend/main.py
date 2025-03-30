@@ -7,6 +7,7 @@ app = FastAPI()
 
 origins = [
     "http://172.31.96.178:3000",
+    "https://court-checker.pages.dev",
 ]
 
 app.add_middleware(
