@@ -119,27 +119,32 @@ async function fetchBookingData(id, date) {
     return bookings
   } 
   catch (error) {
-    return error
+    throw error
   }
 }
 
 async function displayBookingData(id, date) {
-  const bookings = await fetchBookingData(id, date)
+  try {
+    const bookings = await fetchBookingData(id, date)
 
-  const bookingContainer = document.getElementById("bookingContainer")
-  for (let i = 0; i < bookings.length; i++) {
-    // Extract the time 
-    const startTime = bookings[i].Start_Date.slice(11, 20) 
-    const endTime =  bookings[i].End_Date.slice(11, 20)
-    const court =  bookings[i].Name
+    const bookingContainer = document.getElementById("bookingContainer")
+    for (let i = 0; i < bookings.length; i++) {
+      // Extract the time 
+      const startTime = bookings[i].Start_Date.slice(11, 20) 
+      const endTime =  bookings[i].End_Date.slice(11, 20)
+      const court =  bookings[i].Name
 
-    const booking = document.createElement("div")
-    booking.classList.add('individualBooking');
-    const bookingDetails = `Court: ${court}, Start: ${startTime}, End: ${endTime}`
-    booking.textContent = bookingDetails
-    console.log(bookingDetails)
-    
-    bookingContainer.appendChild(booking)
+      const booking = document.createElement("div")
+      booking.classList.add('individualBooking');
+      const bookingDetails = `Court: ${court}, Start: ${startTime}, End: ${endTime}`
+      booking.textContent = bookingDetails
+      console.log(bookingDetails)
+      
+      bookingContainer.appendChild(booking)
+    }
+  }
+  catch (error) {
+    throw error
   }
 }
 
