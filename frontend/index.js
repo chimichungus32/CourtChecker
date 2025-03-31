@@ -144,25 +144,34 @@ async function displayBookingData(id, date) {
 }
 
 const submitButton = document.getElementById("submitButton")
-submitButton.addEventListener("click", () => {
-  // Remove existing booking data from a previous request
-  const bookingContainer = document.getElementById("bookingContainer")
-  while (bookingContainer.firstChild) {
-    bookingContainer.removeChild(bookingContainer.firstChild)
-  }
-
-  // Remove venue options from the search bar
-  const venueOptions = document.getElementById("venueOptions")
-  while (venueOptions.firstChild) {
-    venueOptions.removeChild(venueOptions.firstChild)
-  }
-
-  const venueName = searchBar.value
-  for (let i = 0; i < venues.length; i++) {
-    if (venueName === venues[i].name) {
-      const date = document.getElementById("dateInput").value
-      displayBookingData(venues[i].id, date) // Bookings is a javascript array of all bookings on that date
+submitButton.addEventListener("click", async () => {
+  submitButton.disabled = true
+  try {
+    // Remove existing booking data from a previous request
+    const bookingContainer = document.getElementById("bookingContainer")
+    while (bookingContainer.firstChild) {
+      bookingContainer.removeChild(bookingContainer.firstChild)
     }
+
+    // Remove venue options from the search bar
+    const venueOptions = document.getElementById("venueOptions")
+    while (venueOptions.firstChild) {
+      venueOptions.removeChild(venueOptions.firstChild)
+    }
+
+    const venueName = searchBar.value
+    for (let i = 0; i < venues.length; i++) {
+      if (venueName === venues[i].name) {
+        const date = document.getElementById("dateInput").value
+        await displayBookingData(venues[i].id, date) 
+      }
+    }
+  }
+  catch (error) {
+    console.log("Failed to fetch booking data:", error)
+  }
+  finally {
+    submitButton.disabled = false
   }
 })
 
