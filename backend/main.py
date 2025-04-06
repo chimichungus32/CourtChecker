@@ -17,7 +17,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+# http://127.0.0.1:8000/booking/52?date=2025-04-06 example
 @app.get("/booking/{court_id}")
 def return_booking_data(court_id: int, date: date): # Date is a query parameter
   booking_data = get_booking_data(court_id, date)
