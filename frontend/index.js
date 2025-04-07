@@ -110,8 +110,8 @@ searchBar.addEventListener("input", () => {
 })
 
 async function fetchBookingData(id, date) {
-  const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
-  // const BACKEND_URL = 'http://127.0.0.1:8000'
+  // const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
+  const BACKEND_URL = 'http://127.0.0.1:8000'
 
   try {
     const response = await fetch(`${BACKEND_URL}/booking/${id}?date=${date}`)
@@ -126,7 +126,10 @@ async function fetchBookingData(id, date) {
 async function displayBookingData(id, date) {
   try {
     const bookings = await fetchBookingData(id, date)
-
+    if (bookings.length === 0) {
+      throw new Error("No bookings found")
+    }
+    
     const bookingContainer = document.getElementById("bookingContainer")
     for (let i = 0; i < bookings.length; i++) {
       // Extract the time 
@@ -174,6 +177,12 @@ submitButton.addEventListener("click", async () => {
   }
   catch (error) {
     console.log("Failed to fetch booking data:", error)
+    if (error.message === "No bookings found") {
+      const bookingContainer = document.getElementById("bookingContainer")
+      const error = document.createElement("div")
+      error.textContent = error.message
+      bookingContainer.appendChild(error)
+    }
   }
   finally {
     submitButton.disabled = false

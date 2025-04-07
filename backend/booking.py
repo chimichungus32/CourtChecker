@@ -12,8 +12,10 @@ def get_booking_data(court_id: int, date: date):
 
   cleaned_booking_data = []
 
-  included_names = ["court 1", "court 2", "court 3", "court 4"]
-  excluded_names = ["acrylic hard court 20"]
+  included_names = ["acrylic hard court", "synthetic grass court"]
+  # excluded_names_for_courts = [
+  #   {"Name": "acrylic hard court 20", "Venue": 52}
+  # ]
 
   # booking is dictionary
   # booking data is a list
@@ -24,8 +26,8 @@ def get_booking_data(court_id: int, date: date):
         cleaned_booking["Start_Date"] = booking["Start_Date"].lower()
         cleaned_booking["End_Date"] = booking["End_Date"].lower()
         cleaned_booking["Name"] = booking["Name"].lower()
-         
-        if cleaned_booking["Name"] not in excluded_names:
+        
+        if not (cleaned_booking["Name"] == "acrylic hard court 20" and court_id == 52):
           cleaned_booking_data.append(cleaned_booking)
 
   sorted_data = sorted(cleaned_booking_data, key=lambda x: (x['Name'], x['Start_Date']))
