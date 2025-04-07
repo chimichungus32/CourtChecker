@@ -130,20 +130,31 @@ async function displayBookingData(id, date) {
       throw new Error("No bookings found")
     }
     
-    const bookingContainer = document.getElementById("bookingContainer")
+    const courtNameContainer = document.getElementById("courtNameContainer")
+    const startTimeContainer = document.getElementById("startTimeContainer")
+    const endTimeContainer = document.getElementById("endTimeContainer")
+
     for (let i = 0; i < bookings.length; i++) {
       // Extract the time 
+      const court =  bookings[i].Name
       const startTime = bookings[i].Start_Date.slice(11, 20) 
       const endTime =  bookings[i].End_Date.slice(11, 20)
-      const court =  bookings[i].Name
 
-      const booking = document.createElement("div")
-      booking.classList.add('individualBooking');
-      const bookingDetails = `Court: ${court}, Start: ${startTime}, End: ${endTime}`
-      booking.textContent = bookingDetails
-      console.log(bookingDetails)
-      
-      bookingContainer.appendChild(booking)
+      const courtNameElement = document.createElement("div")
+      courtNameElement.textContent = `Court: ${court}`
+      courtNameElement.classList.add('courtName')
+
+      const startTimeElement = document.createElement("div")
+      startTimeElement.textContent = `Start: ${startTime}`
+      startTimeElement.classList.add('startTime')
+
+      const endTimeElement = document.createElement("div")
+      endTimeElement.textContent = `End: ${endTime}`
+      endTimeElement.classList.add('endTime')
+
+      courtNameContainer.appendChild(courtNameElement)
+      startTimeContainer.appendChild(startTimeElement)
+      endTimeContainer.appendChild(endTimeElement)
     }
   }
   catch (error) {
@@ -156,9 +167,17 @@ submitButton.addEventListener("click", async () => {
   submitButton.disabled = true
   try {
     // Remove existing booking data from a previous request
-    const bookingContainer = document.getElementById("bookingContainer")
-    while (bookingContainer.firstChild) {
-      bookingContainer.removeChild(bookingContainer.firstChild)
+    const courtNameContainer = document.getElementById("courtNameContainer")
+    while (courtNameContainer.firstChild) {
+      courtNameContainer.removeChild(courtNameContainer.firstChild)
+    }
+    const startTimeContainer = document.getElementById("startTimeContainer")
+    while (startTimeContainer.firstChild) {
+      startTimeContainer.removeChild(startTimeContainer.firstChild)
+    }
+    const endTimeContainer = document.getElementById("endTimeContainer")
+    while (endTimeContainer.firstChild) {
+      endTimeContainer.removeChild(endTimeContainer.firstChild)
     }
 
     // Remove venue options from the search bar

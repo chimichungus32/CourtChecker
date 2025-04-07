@@ -26,30 +26,28 @@ body {
 #bookingContainer {
   margin-top: 15px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-/* .individualBooking {
-  font-size: 15px;
-} */
+#startTimeContainer {
+  margin-left: 8px;
+}
+
+#endTimeContainer {
+  margin-left: 8px;
+} 
 
 .matchedVenuesButton {
   margin-right: 181px;
   margin-top: 2px;
   margin-bottom: 2px;
   width: 177px;
-  /* background-color: white; */
 }
 
 #searchBar {
   margin-right: 2px;
 }
-
-/* #dateInput {
-  height: 22px;
-}  */
 
 #submitButton {
   color: white;

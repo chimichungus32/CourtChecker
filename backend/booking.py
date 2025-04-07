@@ -27,8 +27,13 @@ def get_booking_data(court_id: int, date: date):
         cleaned_booking["End_Date"] = booking["End_Date"].lower()
         cleaned_booking["Name"] = booking["Name"].lower()
         
-        if not (cleaned_booking["Name"] == "acrylic hard court 20" and court_id == 52):
+        # Add acrylic hard court 20 bookings only if the venue is canoon (id 43)
+        if cleaned_booking["Name"] == "acrylic hard court 20":
+          if court_id == 43:
+            cleaned_booking_data.append(cleaned_booking)
+        else:
           cleaned_booking_data.append(cleaned_booking)
+        
 
   sorted_data = sorted(cleaned_booking_data, key=lambda x: (x['Name'], x['Start_Date']))
   print(sorted_data)
