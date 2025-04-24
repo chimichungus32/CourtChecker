@@ -110,8 +110,8 @@ searchBar.addEventListener("input", () => {
 })
 
 async function fetchBookingData(id, date) {
-  const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
-  // const BACKEND_URL = 'http://127.0.0.1:8000'
+  // const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
+  const BACKEND_URL = 'http://127.0.0.1:8000'
 
   try {
     const response = await fetch(`${BACKEND_URL}/booking/${id}?date=${date}`)
@@ -127,7 +127,7 @@ async function displayBookingData(id, date) {
   try {
     const bookings = await fetchBookingData(id, date)
     if (bookings.length === 0) {
-      throw new Error("No bookings found")
+      throw new Error("No bookings found!")
     }
     
     const courtNameContainer = document.getElementById("courtNameContainer")
@@ -137,20 +137,28 @@ async function displayBookingData(id, date) {
     for (let i = 0; i < bookings.length; i++) {
       // Extract the time 
       const court =  bookings[i].Name
-      const startTime = bookings[i].Start_Date.slice(11, 20) 
-      const endTime =  bookings[i].End_Date.slice(11, 20)
+      const startTime = new Date(bookings[i].Start_Date)
+      const endTime =  new Date(bookings[i].End_Date)
 
       const courtNameElement = document.createElement("div")
       courtNameElement.textContent = `Court: ${court}`
       courtNameElement.classList.add('courtName')
 
       const startTimeElement = document.createElement("div")
-      startTimeElement.textContent = `Start: ${startTime}`
+      startTimeElement.textContent = `Start: ${startTime.toLocaleTimeString()}`
       startTimeElement.classList.add('startTime')
 
       const endTimeElement = document.createElement("div")
-      endTimeElement.textContent = `End: ${endTime}`
+      endTimeElement.textContent = `End: ${endTime.toLocaleTimeString()}`
       endTimeElement.classList.add('endTime')
+      
+      const currentTime = new Date();
+      if (endTime <= currentTime) {
+        console.log("pastBooking exists")
+        courtNameElement.classList.add('pastBooking')
+        startTimeElement.classList.add('pastBooking')
+        endTimeElement.classList.add('pastBooking')
+      }
 
       courtNameContainer.appendChild(courtNameElement)
       startTimeContainer.appendChild(startTimeElement)
@@ -196,11 +204,11 @@ submitButton.addEventListener("click", async () => {
   }
   catch (error) {
     console.log("Failed to fetch booking data:", error)
-    if (error.message === "No bookings found") {
+    if (error.message === "No bookings found!") {
       const bookingContainer = document.getElementById("bookingContainer")
-      const error = document.createElement("div")
-      error.textContent = error.message
-      bookingContainer.appendChild(error)
+      const errorContainer = document.createElement("div")
+      errorContainer.textContent = error.message
+      bookingContainer.appendChild(errorContainer)
     }
   }
   finally {

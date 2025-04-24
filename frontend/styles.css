@@ -45,6 +45,10 @@ body {
   width: 177px;
 }
 
+.pastBooking {
+  color: gray;
+}
+
 #searchBar {
   margin-right: 2px;
 }
