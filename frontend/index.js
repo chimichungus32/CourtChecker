@@ -110,8 +110,8 @@ searchBar.addEventListener("input", () => {
 })
 
 async function fetchBookingData(id, date) {
-  // const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
-  const BACKEND_URL = 'http://127.0.0.1:8000'
+  const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
+  // const BACKEND_URL = 'http://127.0.0.1:8000'
 
   try {
     const response = await fetch(`${BACKEND_URL}/booking/${id}?date=${date}`)
