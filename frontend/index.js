@@ -174,6 +174,12 @@ const submitButton = document.getElementById("submitButton")
 submitButton.addEventListener("click", async () => {
   submitButton.disabled = true
   try {
+    // Remove no booking message if it exists
+    const errorContainer = document.getElementById("errorContainer")
+    if (errorContainer) {
+      errorContainer.remove()
+    }
+
     // Remove existing booking data from a previous request
     const courtNameContainer = document.getElementById("courtNameContainer")
     while (courtNameContainer.firstChild) {
@@ -208,6 +214,8 @@ submitButton.addEventListener("click", async () => {
       const bookingContainer = document.getElementById("bookingContainer")
       const errorContainer = document.createElement("div")
       errorContainer.textContent = error.message
+      errorContainer.id = "errorContainer"
+      console.log(errorContainer.id)
       bookingContainer.appendChild(errorContainer)
     }
   }
