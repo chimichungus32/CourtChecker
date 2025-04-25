@@ -83,7 +83,6 @@ const venues = [
 
 const searchBar = document.getElementById("searchBar")
 const width = searchBar.offsetWidth;
-console.log(width)
 
 searchBar.addEventListener("input", () => {
   const venueOptions = document.getElementById("venueOptions")
@@ -134,12 +133,22 @@ async function displayBookingData(id, date) {
     const startTimeContainer = document.getElementById("startTimeContainer")
     const endTimeContainer = document.getElementById("endTimeContainer")
 
+    // console.log(new Date('2011-04-12'));
+    // console.log(new Date('2011-04-12').toISOString());
+
     for (let i = 0; i < bookings.length; i++) {
       // Extract the time 
       const court =  bookings[i].Name
-      const startTime = new Date(bookings[i].Start_Date)
-      const endTime =  new Date(bookings[i].End_Date)
 
+      // t in date string MUST be uppercase to be a valid iso 8601 date string and guarantee cross browser support
+      const startTime = new Date(bookings[i].Start_Date.replace("t", "T"))
+      const endTime =  new Date(bookings[i].End_Date.replace("t", "T"))
+      
+      // console.log (bookings[i].Start_Date.replace("t", "T"));
+      // console.log (bookings[i].End_Date.replace("t", "T"));
+      // console.log(startTime)
+      // console.log(endTime)
+      
       const courtNameElement = document.createElement("div")
       courtNameElement.textContent = `Court: ${court}`
       courtNameElement.classList.add('courtName')
