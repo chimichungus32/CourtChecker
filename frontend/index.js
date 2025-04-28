@@ -111,7 +111,7 @@ searchBar.addEventListener("input", () => {
 async function fetchBookingData(id, date) {
   const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
   // const BACKEND_URL = 'http://127.0.0.1:8000'
-
+  
   try {
     const response = await fetch(`${BACKEND_URL}/booking/${id}?date=${date}`)
     const bookings = await response.json() // response.json() parses json response into a javascript array of objects
@@ -124,7 +124,15 @@ async function fetchBookingData(id, date) {
 
 async function displayBookingData(id, date) {
   try {
+    // Display a loading spinner 
+    const bookingContainer = document.getElementById("bookingContainer")
+    const loader = document.createElement("div")
+    loader.className = "loader"
+    bookingContainer.appendChild(loader)
+
     const bookings = await fetchBookingData(id, date)
+    loader.remove()
+
     if (bookings.length === 0) {
       throw new Error("No bookings found!")
     }
@@ -133,9 +141,6 @@ async function displayBookingData(id, date) {
     const startTimeContainer = document.getElementById("startTimeContainer")
     const endTimeContainer = document.getElementById("endTimeContainer")
 
-    // console.log(new Date('2011-04-12'));
-    // console.log(new Date('2011-04-12').toISOString());
-
     for (let i = 0; i < bookings.length; i++) {
       // Extract the time 
       const court =  bookings[i].Name
@@ -143,11 +148,6 @@ async function displayBookingData(id, date) {
       // t in date string MUST be uppercase to be a valid iso 8601 date string and guarantee cross browser support
       const startTime = new Date(bookings[i].Start_Date.replace("t", "T"))
       const endTime =  new Date(bookings[i].End_Date.replace("t", "T"))
-      
-      // console.log (bookings[i].Start_Date.replace("t", "T"));
-      // console.log (bookings[i].End_Date.replace("t", "T"));
-      // console.log(startTime)
-      // console.log(endTime)
       
       const courtNameElement = document.createElement("div")
       courtNameElement.textContent = `Court: ${court}`
