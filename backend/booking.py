@@ -9,7 +9,7 @@ def get_booking_data(court_id: int, date: date):
 
   # # Converts json into list of items where each item is a dictionary containing key-value pairs 
   booking_data = response.json()
-  # print(booking_data)
+  print(booking_data)
 
   cleaned_booking_data = []
 
@@ -26,6 +26,8 @@ def get_booking_data(court_id: int, date: date):
         cleaned_booking["Start_Date"] = booking["Start_Date"].lower()
         cleaned_booking["End_Date"] = booking["End_Date"].lower()
         cleaned_booking["Name"] = booking["Name"].lower()
+        cleaned_booking["First_Name"] = booking["Given_Names"]
+        cleaned_booking["Last_Name"] = booking["Family_Name"]
       
         # Add acrylic hard court 20 bookings only if the venue is canoon (id 43)
         if cleaned_booking["Name"] == "acrylic hard court 20":

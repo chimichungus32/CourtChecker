@@ -1,0 +1,80 @@
+body {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.venueContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#bookingContainer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#bookerNameContainer {
+  margin-left: 8px;
+}
+
+#startTimeContainer {
+  margin-left: 8px;
+}
+
+#endTimeContainer {
+  margin-left: 8px;
+} 
+
+.matchedVenuesButton {
+  margin-right: 181px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 177px;
+}
+
+.pastBooking {
+  color: rgb(218, 216, 216)
+}
+
+#searchBar {
+  margin-right: 2px;
+}
+
+#submitButton {
+  color: white;
+  background-color: black;
+  margin-left: 2px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.loader {
+  border: 3px solid #f3f3f3; /* Light grey */
+  border-top: 3px solid black; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

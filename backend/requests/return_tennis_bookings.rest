@@ -1,1 +1,1 @@
-GET http://localhost:8000/booking/52?date=2025-04-21
+GET http://localhost:8000/booking/52?date=2025-05-06
