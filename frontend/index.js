@@ -108,18 +108,31 @@ searchBar.addEventListener("input", () => {
   }
 })
 
-async function fetchBookingData(id, date) {
+async function fetchBookingData(nameParam, id, date) {
   const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
   // const BACKEND_URL = 'http://127.0.0.1:8000'
-  
-  try {
-    const response = await fetch(`${BACKEND_URL}/booking/names/${id}?date=${date}`)
-    const bookings = await response.json() // response.json() parses json response into a javascript array of objects
-    return bookings
-  } 
-  catch (error) {
-    throw error
+
+  if (nameParam === "true") {
+    try {
+      const response = await fetch(`${BACKEND_URL}/booking/names/${id}?date=${date}`)
+      const bookings = await response.json() // response.json() parses json response into a javascript array of objects
+      return bookings
+    } 
+    catch (error) {
+      throw error
+    }
   }
+  else {
+    try {
+      const response = await fetch(`${BACKEND_URL}/booking/${id}?date=${date}`)
+      const bookings = await response.json() // response.json() parses json response into a javascript array of objects
+      return bookings
+    } 
+    catch (error) {
+      throw error
+    }
+  }
+  
 }
 
 async function displayBookingData(id, date) {
@@ -130,7 +143,10 @@ async function displayBookingData(id, date) {
     loader.className = "loader"
     bookingContainer.appendChild(loader)
 
-    const bookings = await fetchBookingData(id, date)
+    const params = new URLSearchParams(window.location.search);
+    const nameParam = params.get('name');
+   
+    const bookings = await fetchBookingData(nameParam, id, date)
     loader.remove()
 
     if (bookings.length === 0) {
@@ -138,7 +154,6 @@ async function displayBookingData(id, date) {
     }
     
     const courtNameContainer = document.getElementById("courtNameContainer")
-    const bookerNameContainer = document.getElementById("bookerNameContainer")
     const startTimeContainer = document.getElementById("startTimeContainer")
     const endTimeContainer = document.getElementById("endTimeContainer")
 
@@ -146,9 +161,6 @@ async function displayBookingData(id, date) {
       console.log(bookings[i])
       // Extract the time 
       const court =  bookings[i].Name
-      
-      // Extract the booker's first and last name
-      const bookersName = bookings[i].First_Name + ' ' + bookings[i].Last_Name
 
       // t in date string MUST be uppercase to be a valid iso 8601 date string and guarantee cross browser support
       const startTime = new Date(bookings[i].Start_Date.replace("t", "T"))
@@ -157,10 +169,17 @@ async function displayBookingData(id, date) {
       const courtNameElement = document.createElement("div")
       courtNameElement.textContent = `Court: ${court}`
       courtNameElement.classList.add('courtName')
+     
+      if (nameParam === "true") {
+        const bookerNameContainer = document.getElementById("bookerNameContainer")
+        const bookersName = bookings[i].First_Name + ' ' + bookings[i].Last_Name // Extract the booker's first and last name
+ 
+        const bookersNameElement = document.createElement("div")
+        bookersNameElement.textContent = bookersName
+        bookersNameElement.classList.add('bookersName')
 
-      const bookersNameElement = document.createElement("div")
-      bookersNameElement.textContent = bookersName
-      bookersNameElement.classList.add('bookersName')
+        bookerNameContainer.appendChild(bookersNameElement)
+      }
 
       const startTimeElement = document.createElement("div")
       startTimeElement.textContent = `Start: ${startTime.toLocaleTimeString()}`
@@ -172,15 +191,20 @@ async function displayBookingData(id, date) {
       
       const currentTime = new Date();
       if (endTime <= currentTime) {
-        console.log("pastBooking exists")
         courtNameElement.classList.add('pastBooking')
-        bookersNameElement.classList.add('pastBooking')
+        
+        if (nameParam === "true") {
+          const bookersNameElements = document.getElementsByClassName('bookersName');
+          for (let element of bookersNameElements) {
+            element.classList.add('pastBooking');
+          }
+        }
+
         startTimeElement.classList.add('pastBooking')
         endTimeElement.classList.add('pastBooking')
       }
 
       courtNameContainer.appendChild(courtNameElement)
-      bookerNameContainer.appendChild(bookersNameElement)
       startTimeContainer.appendChild(startTimeElement)
       endTimeContainer.appendChild(endTimeElement)
     }
