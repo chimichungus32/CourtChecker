@@ -179,6 +179,9 @@ async function displayBookingData(id, date) {
         bookersNameElement.classList.add('bookersName')
 
         bookerNameContainer.appendChild(bookersNameElement)
+
+        const currentTime = new Date();
+        if (endTime <= currentTime) bookersNameElement.classList.add('pastBooking')
       }
 
       const startTimeElement = document.createElement("div")
@@ -192,14 +195,6 @@ async function displayBookingData(id, date) {
       const currentTime = new Date();
       if (endTime <= currentTime) {
         courtNameElement.classList.add('pastBooking')
-        
-        if (nameParam === "true") {
-          const bookersNameElements = document.getElementsByClassName('bookersName');
-          for (let element of bookersNameElements) {
-            element.classList.add('pastBooking');
-          }
-        }
-
         startTimeElement.classList.add('pastBooking')
         endTimeElement.classList.add('pastBooking')
       }
