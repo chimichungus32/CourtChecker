@@ -82,7 +82,7 @@ const venues = [
 ]
 
 const searchBar = document.getElementById("searchBar")
-const width = searchBar.offsetWidth;
+document.getElementById("dateInput").defaultValue = new Date().toISOString().split('T')[0]
 
 searchBar.addEventListener("input", () => {
   const venueOptions = document.getElementById("venueOptions")
