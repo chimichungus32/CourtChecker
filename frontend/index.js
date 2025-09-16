@@ -82,7 +82,7 @@ const venues = [
 ]
 
 const searchBar = document.getElementById("searchBar")
-document.getElementById("dateInput").defaultValue = new Date().toISOString().split('T')[0]
+document.getElementById("dateInput").defaultValue = new Date().toLocaleDateString('en-CA') // English (Canada) → formats dates as YYYY-MM-DD
 
 searchBar.addEventListener("input", () => {
   const venueOptions = document.getElementById("venueOptions")
