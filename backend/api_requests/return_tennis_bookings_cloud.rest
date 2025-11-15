@@ -1,0 +1,1 @@
+GET https://court-checker-578539101560.australia-southeast1.run.app/booking/52?date=2025-11-15

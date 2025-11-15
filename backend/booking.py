@@ -27,7 +27,6 @@ def get_booking_data(court_id: int, date: date):
 
   return sorted_data
 
-
 # import requests
 # from datetime import date
 

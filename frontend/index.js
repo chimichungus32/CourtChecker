@@ -108,31 +108,44 @@ searchBar.addEventListener("input", () => {
   }
 })
 
-async function fetchBookingData(nameParam, id, date) {
+// async function fetchBookingData(nameParam, id, date) {
+//   // const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
+//   const BACKEND_URL = 'http://127.0.0.1:8000'
+
+//   if (nameParam === "true") {
+//     try {
+//       const response = await fetch(`${BACKEND_URL}/booking/names/${id}?date=${date}`)
+//       const bookings = await response.json() // response.json() parses json response into a javascript array of objects
+//       return bookings
+//     } 
+//     catch (error) {
+//       throw error
+//     }
+//   }
+//   else {
+//     try {
+//       const response = await fetch(`${BACKEND_URL}/booking/${id}?date=${date}`)
+//       const bookings = await response.json() // response.json() parses json response into a javascript array of objects
+//       return bookings
+//     } 
+//     catch (error) {
+//       throw error
+//     }
+//   }
+// }
+
+async function fetchBookingData(id, date) {
   // const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
   const BACKEND_URL = 'http://127.0.0.1:8000'
 
-  if (nameParam === "true") {
-    try {
-      const response = await fetch(`${BACKEND_URL}/booking/names/${id}?date=${date}`)
-      const bookings = await response.json() // response.json() parses json response into a javascript array of objects
-      return bookings
-    } 
-    catch (error) {
-      throw error
-    }
+  try {
+    const response = await fetch(`${BACKEND_URL}/booking/${id}?date=${date}`)
+    const bookings = await response.json() // response.json() parses json response into a javascript array of objects
+    return bookings
+  } 
+  catch (error) {
+    throw error
   }
-  else {
-    try {
-      const response = await fetch(`${BACKEND_URL}/booking/${id}?date=${date}`)
-      const bookings = await response.json() // response.json() parses json response into a javascript array of objects
-      return bookings
-    } 
-    catch (error) {
-      throw error
-    }
-  }
-  
 }
 
 async function displayBookingData(id, date) {
@@ -143,10 +156,11 @@ async function displayBookingData(id, date) {
     loader.className = "loader"
     bookingContainer.appendChild(loader)
 
-    const params = new URLSearchParams(window.location.search);
-    const nameParam = params.get('name');
-   
-    const bookings = await fetchBookingData(nameParam, id, date)
+    // const params = new URLSearchParams(window.location.search);
+    // const nameParam = params.get('name');
+    // const bookings = await fetchBookingData(nameParam, id, date)
+
+    const bookings = await fetchBookingData(id, date)
     loader.remove()
 
     if (bookings.length === 0) {
