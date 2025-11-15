@@ -17,7 +17,7 @@ def get_booking_data(court_id: int, date: date):
   # booking data is a list
   for booking in booking_data:
     cleaned_booking = {}
-    if "court" in booking["Name"].lower():
+    if booking["PreventBooking"] != True:
       cleaned_booking["Start_Date"] = booking["Start_Date"].lower()
       cleaned_booking["End_Date"] = booking["End_Date"].lower()
       cleaned_booking["Name"] = booking["Name"].lower()

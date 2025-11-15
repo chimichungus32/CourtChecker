@@ -109,8 +109,8 @@ searchBar.addEventListener("input", () => {
 })
 
 async function fetchBookingData(nameParam, id, date) {
-  const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
-  // const BACKEND_URL = 'http://127.0.0.1:8000'
+  // const BACKEND_URL = 'https://court-checker-578539101560.australia-southeast1.run.app'
+  const BACKEND_URL = 'http://127.0.0.1:8000'
 
   if (nameParam === "true") {
     try {
@@ -170,19 +170,19 @@ async function displayBookingData(id, date) {
       courtNameElement.textContent = `Court: ${court}`
       courtNameElement.classList.add('courtName')
      
-      if (nameParam === "true") {
-        const bookerNameContainer = document.getElementById("bookerNameContainer")
-        const bookersName = bookings[i].First_Name + ' ' + bookings[i].Last_Name // Extract the booker's first and last name
+      // if (nameParam === "true") {
+      //   const bookerNameContainer = document.getElementById("bookerNameContainer")
+      //   const bookersName = bookings[i].First_Name + ' ' + bookings[i].Last_Name // Extract the booker's first and last name
  
-        const bookersNameElement = document.createElement("div")
-        bookersNameElement.textContent = bookersName
-        bookersNameElement.classList.add('bookersName')
+      //   const bookersNameElement = document.createElement("div")
+      //   bookersNameElement.textContent = bookersName
+      //   bookersNameElement.classList.add('bookersName')
 
-        bookerNameContainer.appendChild(bookersNameElement)
+      //   bookerNameContainer.appendChild(bookersNameElement)
 
-        const currentTime = new Date();
-        if (endTime <= currentTime) bookersNameElement.classList.add('pastBooking')
-      }
+      //   const currentTime = new Date();
+      //   if (endTime <= currentTime) bookersNameElement.classList.add('pastBooking')
+      // }
 
       const startTimeElement = document.createElement("div")
       startTimeElement.textContent = `Start: ${startTime.toLocaleTimeString()}`
