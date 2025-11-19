@@ -9,7 +9,7 @@ def get_booking_data(court_id: int, date: date):
 
   # # Converts json into list of items where each item is a dictionary containing key-value pairs 
   booking_data = response.json()
-  print(booking_data)
+  # print(booking_data)
 
   cleaned_booking_data = []
 
@@ -17,7 +17,8 @@ def get_booking_data(court_id: int, date: date):
   # booking data is a list
   for booking in booking_data:
     cleaned_booking = {}
-    if booking["PreventBooking"] != True:
+    if booking["PreventBooking"] is None:
+      print(booking["PreventBooking"], booking["Name"].lower())
       cleaned_booking["Start_Date"] = booking["Start_Date"].lower()
       cleaned_booking["End_Date"] = booking["End_Date"].lower()
       cleaned_booking["Name"] = booking["Name"].lower()
